@@ -56,7 +56,6 @@ func (g *Game2048) AddRandom() {
 	}
 	pos = positions[rnd.Intn(size)]
 	n := (rnd.Intn(2) + 1) * 2
-	g.Score += n
 	g.Matrix[pos/g.Size][pos%g.Size] = n
 }
 
@@ -79,7 +78,7 @@ func (g *Game2048) MoveUP() {
 		for j := 0; j < g.Size; j++ {
 			v[j] = g.Matrix[j][i]
 		}
-		group(v)
+		g.Score += group(v)
 		for j := 0; j < g.Size; j++ {
 			g.Matrix[j][i] = v[j]
 		}
@@ -95,7 +94,7 @@ func (g *Game2048) MoveDOWN() {
 		for j := 0; j < g.Size; j++ {
 			v[j] = g.Matrix[(g.Size-1)-j][i]
 		}
-		group(v)
+		g.Score += group(v)
 		for j := 0; j < g.Size; j++ {
 			g.Matrix[(g.Size-1)-j][i] = v[j]
 		}
@@ -111,7 +110,7 @@ func (g *Game2048) MoveLEFT() {
 		for j := 0; j < g.Size; j++ {
 			v[j] = g.Matrix[i][j]
 		}
-		group(v)
+		g.Score += group(v)
 		for j := 0; j < g.Size; j++ {
 			g.Matrix[i][j] = v[j]
 		}
@@ -127,7 +126,7 @@ func (g *Game2048) MoveRIGHT() {
 		for j := 0; j < g.Size; j++ {
 			v[j] = g.Matrix[i][(g.Size-1)-j]
 		}
-		group(v)
+		g.Score += group(v)
 		for j := 0; j < g.Size; j++ {
 			g.Matrix[i][(g.Size-1)-j] = v[j]
 		}
@@ -219,7 +218,8 @@ func (g *Game2048) ValidateRIGHT() bool {
 	return false
 }
 
-func group(v []int) {
+func group(v []int) int {
+	score := 0
 	vAux := []int{0, 0, 0, 0}
 
 	pos := 0
@@ -234,10 +234,12 @@ func group(v []int) {
 	for i := 0; i < len(vAux); i++ {
 		if i < 3 && vAux[i] == vAux[i+1] {
 			v[pos] = vAux[i] * 2
+			score += v[pos]
 			i++
 		} else {
 			v[pos] = vAux[i]
 		}
 		pos++
 	}
+	return score
 }
