@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	// "../../game2048"
-	"github.com/cmp102/game2048"
+	"../../game2048"
+	// "github.com/cmp102/game2048"
 )
 
 func main() {
