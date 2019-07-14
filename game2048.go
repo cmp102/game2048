@@ -103,8 +103,8 @@ func (g *Game2048) MoveDOWN() {
 	g.Moves++
 }
 
-//MoveRIGHT moves right all possible cells
-func (g *Game2048) MoveRIGHT() {
+//MoveLEFT moves left all possible cells
+func (g *Game2048) MoveLEFT() {
 	fmt.Printf("MOVE RIGHT\n")
 	v := make([]int, g.Size)
 	for i := 0; i < g.Size; i++ {
@@ -119,8 +119,8 @@ func (g *Game2048) MoveRIGHT() {
 	g.Moves++
 }
 
-//MoveLEFT moves left all possible cells
-func (g *Game2048) MoveLEFT() {
+//MoveRIGHT moves right all possible cells
+func (g *Game2048) MoveRIGHT() {
 	fmt.Printf("MOVE LEFT\n")
 	v := make([]int, g.Size)
 	for i := 0; i < g.Size; i++ {
@@ -177,8 +177,8 @@ func (g *Game2048) ValidateDOWN() bool {
 	return false
 }
 
-//ValidateRIGHT checks if can move right
-func (g *Game2048) ValidateRIGHT() bool {
+//ValidateLEFT checks if can move left
+func (g *Game2048) ValidateLEFT() bool {
 	for i := 0; i < g.Size; i++ {
 		zeroFound := false
 		for j := 0; j < g.Size; j++ {
@@ -198,8 +198,8 @@ func (g *Game2048) ValidateRIGHT() bool {
 	return false
 }
 
-//ValidateLEFT checks if can move left
-func (g *Game2048) ValidateLEFT() bool {
+//ValidateRIGHT checks if can move right
+func (g *Game2048) ValidateRIGHT() bool {
 	for i := 0; i < g.Size; i++ {
 		zeroFound := false
 		for j := 0; j < g.Size; j++ {
