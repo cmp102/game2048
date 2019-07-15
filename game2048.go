@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
 var rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -216,6 +218,24 @@ func (g *Game2048) ValidateRIGHT() bool {
 		}
 	}
 	return false
+}
+
+//GenerateImage generates a image of the actual state
+func (g *Game2048) GenerateImage(name string, srcDir string) {
+	imagick.Initialize()
+	defer imagick.Terminate()
+	mw := imagick.NewMagickWand()
+	pw := imagick.NewPixelWand()
+	pw.SetColor("#bbada0")
+	mw.SetBackgroundColor(pw)
+	for _, vi := range g.Matrix {
+		for _, vj := range vi {
+			mw.ReadImage(srcDir + fmt.Sprintf("%s%d.png", srcDir, vj))
+		}
+	}
+	dw := imagick.NewDrawingWand()
+	mw = mw.MontageImage(dw, fmt.Sprintf("%dx%d", g.Size, g.Size), "120x120+10+10", imagick.MONTAGE_MODE_CONCATENATE, "0x0+0+0")
+	mw.WriteImage(name)
 }
 
 func group(v []int) int {
